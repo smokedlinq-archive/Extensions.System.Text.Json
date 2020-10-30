@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>Enable</Nullable>
+    <Description>This package addresses missing features from System.Text.Json when switching from Newtonsoft.Json.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VersionPrefix Condition=" '$(VersionPrefix)'=='' ">0.0.0</VersionPrefix>
+    <VersionSuffix Condition=" '$(VersionSuffix)'=='' ">dev</VersionSuffix>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Version)' != ''">
+    <IsPackable>true</IsPackable>
+    <DebugType>Portable</DebugType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <VersionPrefix>$(Version)</VersionPrefix>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <Authors>https://github.com/smokedlinq/Extensions.System.Text.Json</Authors>
+    <Company>https://github.com/smokedlinq/Extensions.System.Text.Json</Company>
+    <PackageProjectUrl>https://github.com/smokedlinq/Extensions.System.Text.Json</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/smokedlinq/Extensions.System.Text.Json.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
+  </ItemGroup>
+
+</Project>

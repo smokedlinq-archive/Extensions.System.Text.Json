@@ -1,0 +1,38 @@
+name: Publish
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.x
+
+    - name: Build and publish
+      shell: pwsh
+      run: |
+        dotnet build --configuration Release
+        dotnet pack --configuration Release -p:Version=$($env:GITHUB_REF -replace '^refs/tags/v','') --output ./publish
+        dotnet nuget add source https://nuget.pkg.github.com/smokedlinq/index.json -n github -u smokedlinq -p ${{ secrets.GITHUB_TOKEN }}
+        cd ./publish
+        dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+        dotnet nuget push "*.nupkg" -s github --skip-duplicate --no-symbols true
+    - name: Create release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
