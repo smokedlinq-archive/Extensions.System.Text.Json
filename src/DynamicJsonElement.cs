@@ -4,7 +4,6 @@ using System.Linq;
 namespace System.Text.Json
 {
     // Another missing feature out of the box for System.Text.Json
-    // TODO: Replace with native support if/when added
     // https://github.com/dotnet/runtime/issues/31175
     public class DynamicJsonElement : DynamicObject
     {

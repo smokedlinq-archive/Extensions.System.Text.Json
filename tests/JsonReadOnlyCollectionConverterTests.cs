@@ -74,7 +74,7 @@ namespace Extensions.System.Text.Json.Tests
         {
             public ICollection<int> Collection { get; } = new List<int>();
             public IList<int> List { get; } = new List<int>();
-            public JsonObject Object { get; set; }
+            public JsonObject? Object { get; set; }
         }
     }
 }

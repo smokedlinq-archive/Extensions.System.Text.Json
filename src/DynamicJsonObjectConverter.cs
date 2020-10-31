@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 namespace System.Text.Json
 {
     // Adds support for adding to ICollection<T> properties that are read-only
-    // TODO: Remove this if this feature is ever natively added to System.Text.Json
     // https://github.com/dotnet/runtime/issues/30258
     public sealed class DynamicJsonConverter : JsonConverterFactory
     {

@@ -6,7 +6,6 @@ using System.Text.Json.Serialization;
 namespace System.Text.Json
 {
     // Adds support for adding to ICollection<T> properties that are read-only
-    // TODO: Remove this if this feature is ever natively added to System.Text.Json
     // https://github.com/dotnet/runtime/issues/30258
     public sealed class JsonReadOnlyCollectionConverter : JsonConverterFactory
     {
@@ -36,6 +35,7 @@ namespace System.Text.Json
         {
             private readonly IDictionary<string, (Type PropertyType, Type? CollectionElementType, Action<T, object> Handler)> _properties;
 
+#pragma warning disable S1144 // Dynamically activate type per generic type
             public ReadOnlyCollectionConverter()
             {
                 _properties = typeof(T)
@@ -80,6 +80,7 @@ namespace System.Text.Json
                     })
                     .ToDictionary(x => x.PropertyName, x => (x.PropertyType, x.CollectionElementType, x.Handler));
             }
+#pragma warning restore S1144
 
             public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

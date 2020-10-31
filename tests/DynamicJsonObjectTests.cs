@@ -43,7 +43,7 @@ namespace Extensions.System.Text.Json.Tests
 
         public class JsonObject
         {
-            public string Value { get; set; }
+            public string? Value { get; set; }
         }
     }
 }
