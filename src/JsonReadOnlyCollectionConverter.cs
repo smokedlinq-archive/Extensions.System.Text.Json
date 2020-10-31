@@ -99,39 +99,7 @@ namespace System.Text.Json
                     {
                         if (properties.TryGetValue(reader.GetString(), out var info))
                         {
-                            if (!reader.Read())
-                            {
-                                throw new JsonException("Missing property value.");
-                            }
-
-                            if (info.CollectionElementType is null)
-                            {
-                                info.Handler(item, JsonSerializer.Deserialize(ref reader, info.PropertyType, options));
-                            }
-                            else
-                            {
-                                if (reader.TokenType == JsonTokenType.StartArray)
-                                {
-                                    while (true)
-                                    {
-                                        if (!reader.Read())
-                                        {
-                                            throw new JsonException($"Missing end of array.");
-                                        }
-
-                                        if (reader.TokenType == JsonTokenType.EndArray)
-                                        {
-                                            break;
-                                        }
-
-                                        info.Handler(item, JsonSerializer.Deserialize(ref reader, info.CollectionElementType, options));
-                                    }
-                                }
-                                else
-                                {
-                                    reader.Skip();
-                                }
-                            }
+                            ReadProperty(ref reader, options, item, info);
                         }
                         else
                         {
@@ -139,7 +107,50 @@ namespace System.Text.Json
                         }
                     }
                 }
+
                 return item;
+            }
+
+            private static void ReadProperty(ref Utf8JsonReader reader, JsonSerializerOptions options, T item, (Type PropertyType, Type? CollectionElementType, Action<T, object> Handler) info)
+            {
+                if (!reader.Read())
+                {
+                    throw new JsonException("Missing property value.");
+                }
+
+                if (info.CollectionElementType is null)
+                {
+                    info.Handler(item, JsonSerializer.Deserialize(ref reader, info.PropertyType, options));
+                }
+                else
+                {
+                    if (reader.TokenType == JsonTokenType.StartArray)
+                    {
+                        ReadArray(ref reader, options, item, info);
+                    }
+                    else
+                    {
+                        reader.Skip();
+                    }
+                }
+            }
+
+            private static void ReadArray(ref Utf8JsonReader reader, JsonSerializerOptions options, T item, (Type PropertyType, Type? CollectionElementType, Action<T, object> Handler) info)
+            {
+                while (true)
+                {
+                    if (!reader.Read())
+                    {
+                        throw new JsonException($"Missing end of array.");
+                    }
+
+                    if (reader.TokenType == JsonTokenType.EndArray)
+                    {
+                        break;
+                    }
+
+                    info.Handler(item, JsonSerializer.Deserialize(ref reader, info.CollectionElementType, options));
+                }
             }
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
