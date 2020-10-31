@@ -14,9 +14,9 @@ namespace Extensions.System.Text.Json.Tests
         [AutoData]
         public void ValueAsNumericIsSupported(T input)
             => A3<dynamic>
-            .Arrange(setup => setup.Sut(_ => DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(JsonSerializer.Serialize(Convert.ChangeType(input, typeof(ulong)))))))
+            .Arrange(setup => setup.Sut(DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(JsonSerializer.Serialize(Convert.ChangeType(input, typeof(ulong)))))))
             .Act(sut => (T)sut)
-            .Assert((_, result) => result.Should().Be(input));
+            .Assert(result => result.Should().Be(input));
     }
 
     public enum EnumAsByte : byte { Value = byte.MaxValue }

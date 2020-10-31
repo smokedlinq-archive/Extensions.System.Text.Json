@@ -20,11 +20,11 @@ namespace Extensions.System.Text.Json.Tests
 
                 var json = JsonSerializer.Serialize(input, options);
 
-                setup.Sut(_ => options);
+                setup.Sut(options);
                 setup.Parameter(json);
             })
             .Act((JsonSerializerOptions sut, string json) => JsonSerializer.Deserialize<TimeSpan>(json, sut))
-            .Assert((_, result) => result.Should().Be(input));
+            .Assert(result => result.Should().Be(input));
 
         [Theory]
         [AutoData]
@@ -39,11 +39,11 @@ namespace Extensions.System.Text.Json.Tests
 
                 var json = JsonSerializer.Serialize(input, options);
 
-                setup.Sut(_ => options);
+                setup.Sut(options);
                 setup.Parameter(json);
             })
             .Act((JsonSerializerOptions sut, string json) => JsonSerializer.Deserialize<JsonObject>(json, sut))
-            .Assert((_, result) => result.Timestamp.Should().BeNull());
+            .Assert(result => result.Timestamp.Should().BeNull());
 
         [Theory]
         [AutoData]
@@ -56,11 +56,11 @@ namespace Extensions.System.Text.Json.Tests
 
                 var json = JsonSerializer.Serialize(input, options);
 
-                setup.Sut(_ => options);
+                setup.Sut(options);
                 setup.Parameter(json);
             })
             .Act((JsonSerializerOptions sut, string json) => JsonSerializer.Deserialize<JsonObject>(json, sut))
-            .Assert((_, result) => result.Timestamp.Should().NotBeNull());
+            .Assert(result => result.Timestamp.Should().NotBeNull());
 
         public class JsonObject
         {

@@ -17,9 +17,9 @@ namespace Extensions.System.Text.Json.Tests
                 var options = new JsonSerializerOptions();
                 options.Converters.Add(new DynamicJsonConverter());
                 var json = JsonSerializer.Serialize(new { Input = input }, options);
-                setup.Sut(_ => JsonSerializer.Deserialize<dynamic>(json, options));
+                setup.Sut(JsonSerializer.Deserialize<dynamic>(json, options));
             })
             .Act(sut => (string)sut.Input)
-            .Assert((_, result) => result.Should().Be(input));
+            .Assert(result => result.Should().Be(input));
     }
 }

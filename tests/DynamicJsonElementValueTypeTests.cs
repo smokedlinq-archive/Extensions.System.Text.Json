@@ -11,8 +11,8 @@ namespace Extensions.System.Text.Json.Tests
         [Fact]
         public void NullIsSupported()
             => A3<dynamic>
-            .Arrange(setup => setup.Sut(_ => DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(JsonSerializer.Serialize<T?>(null, JsonSerializerOptions), JsonSerializerOptions))))
+            .Arrange(setup => setup.Sut(DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(JsonSerializer.Serialize<T?>(null, JsonSerializerOptions), JsonSerializerOptions))))
             .Act(sut => (T?)sut)
-            .Assert((_, result) => result.Should().BeNull());
+            .Assert(result => result.Should().BeNull());
     }
 }

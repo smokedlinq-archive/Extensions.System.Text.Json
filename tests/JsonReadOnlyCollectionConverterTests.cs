@@ -19,11 +19,11 @@ namespace Extensions.System.Text.Json.Tests
                 var options = new JsonSerializerOptions();
                 options.Converters.Add(new JsonReadOnlyCollectionConverter());
 
-                setup.Sut(_ => options);
+                setup.Sut(options);
                 setup.Parameter(json);
             })
             .Act((JsonSerializerOptions sut, string json) => JsonSerializer.Deserialize<JsonObject>(json, sut))
-            .Assert((_, result) => result.Collection.Should().BeEquivalentTo(obj.Collection));
+            .Assert(result => result.Collection.Should().BeEquivalentTo(obj.Collection));
 
         [Theory]
         [AutoFixtureData]
@@ -35,11 +35,11 @@ namespace Extensions.System.Text.Json.Tests
                 var options = new JsonSerializerOptions();
                 options.Converters.Add(new JsonReadOnlyCollectionConverter());
 
-                setup.Sut(_ => options);
+                setup.Sut(options);
                 setup.Parameter(json);
             })
             .Act((JsonSerializerOptions sut, string json) => JsonSerializer.Deserialize<JsonObject>(json, sut))
-            .Assert((_, result) => result.List.Should().BeEquivalentTo(obj.List));
+            .Assert(result => result.List.Should().BeEquivalentTo(obj.List));
 
         [Theory]
         [AutoFixtureData]
@@ -53,11 +53,11 @@ namespace Extensions.System.Text.Json.Tests
                 var options = new JsonSerializerOptions();
                 options.Converters.Add(new JsonReadOnlyCollectionConverter());
 
-                setup.Sut(_ => options);
+                setup.Sut(options);
                 setup.Parameter(json);
             })
             .Act((JsonSerializerOptions sut, string json) => JsonSerializer.Deserialize<JsonObject>(json, sut))
-            .Assert((_, result) => result.Object.Should().NotBeNull());
+            .Assert(result => result.Object.Should().NotBeNull());
 
         public class JsonObjectFixture : ICustomizeFixture<JsonObject>
         {

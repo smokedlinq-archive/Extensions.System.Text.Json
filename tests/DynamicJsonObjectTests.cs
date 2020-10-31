@@ -16,14 +16,14 @@ namespace Extensions.System.Text.Json.Tests
             .Arrange(setup =>
             {
                 var json = JsonSerializer.Serialize(input);
-                setup.Sut(_ => DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
+                setup.Sut(DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
             })
             .Act(sut =>
             {
                 JsonObject result = sut;
                 return result;
             })
-            .Assert((_, result) => result.Should().BeEquivalentTo(input));
+            .Assert(result => result.Should().BeEquivalentTo(input));
 
         [Theory]
         [AutoData]
@@ -32,14 +32,14 @@ namespace Extensions.System.Text.Json.Tests
             .Arrange(setup =>
             {
                 var json = JsonSerializer.Serialize(input);
-                setup.Sut(_ => DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
+                setup.Sut(DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
             })
             .Act(sut =>
             {
                 IDictionary<string, string> result = sut;
                 return result;
             })
-            .Assert((_, result) => result.Should().BeEquivalentTo(input));
+            .Assert(result => result.Should().BeEquivalentTo(input));
 
         [Theory]
         [AutoData]
@@ -48,10 +48,10 @@ namespace Extensions.System.Text.Json.Tests
             .Arrange(setup =>
             {
                 var json = JsonSerializer.Serialize(input);
-                setup.Sut(_ => (DynamicJsonObject)DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
+                setup.Sut((DynamicJsonObject)DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
             })
             .Act(sut => sut.GetDynamicMemberNames())
-            .Assert((_, result) => result.Should().Contain(nameof(JsonObject.Value)));
+            .Assert(result => result.Should().Contain(nameof(JsonObject.Value)));
 
         [Theory]
         [AutoData]
@@ -60,10 +60,10 @@ namespace Extensions.System.Text.Json.Tests
             .Arrange(setup =>
             {
                 var json = JsonSerializer.Serialize(input);
-                setup.Sut(_ => DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
+                setup.Sut(DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
             })
             .Act(sut => (string?)sut[nameof(JsonObject.Value)])
-            .Assert((_, result) => result.Should().Be(input.Value));
+            .Assert(result => result.Should().Be(input.Value));
 
         public class JsonObject
         {
