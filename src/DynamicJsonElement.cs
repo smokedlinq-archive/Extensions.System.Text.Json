@@ -1,4 +1,7 @@
 using System.Dynamic;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Extensions.System.Text.Json.Tests")]
 
 namespace System.Text.Json
 {

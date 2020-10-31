@@ -2,6 +2,7 @@
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Xunit;
 
 namespace Extensions.System.Text.Json.Tests
@@ -14,6 +15,7 @@ namespace Extensions.System.Text.Json.Tests
         {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new JsonTimeSpanConverter());
+            options.Converters.Add(new JsonStringEnumConverter());
             return options;
         }
 

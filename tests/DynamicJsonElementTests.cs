@@ -3,6 +3,7 @@ using System;
 namespace Extensions.System.Text.Json.Tests
 {
     public class DynamicJsonElementStringTests : DynamicJsonElementWithEnumerableTests<string> { }
+    public class DynamicJsonElementBooleanTests : DynamicJsonElementValueTypeTests<bool> { }
     public class DynamicJsonElementByteTests : DynamicJsonElementValueTypeTests<byte> { }
     public class DynamicJsonElementSByteTests : DynamicJsonElementValueTypeTests<sbyte> { }
     public class DynamicJsonElementInt16Tests : DynamicJsonElementValueTypeTests<short> { }

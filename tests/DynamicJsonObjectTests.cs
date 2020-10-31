@@ -41,6 +41,30 @@ namespace Extensions.System.Text.Json.Tests
             })
             .Assert((_, result) => result.Should().BeEquivalentTo(input));
 
+        [Theory]
+        [AutoData]
+        public void CanGetMemberNames(JsonObject input)
+            => A3<DynamicJsonObject>
+            .Arrange(setup =>
+            {
+                var json = JsonSerializer.Serialize(input);
+                setup.Sut(_ => (DynamicJsonObject)DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
+            })
+            .Act(sut => sut.GetDynamicMemberNames())
+            .Assert((_, result) => result.Should().Contain(nameof(JsonObject.Value)));
+
+        [Theory]
+        [AutoData]
+        public void CanAccessPropertyByIndexer(JsonObject input)
+            => A3<dynamic>
+            .Arrange(setup =>
+            {
+                var json = JsonSerializer.Serialize(input);
+                setup.Sut(_ => DynamicJsonElement.From(JsonSerializer.Deserialize<JsonElement>(json)));
+            })
+            .Act(sut => (string?)sut[nameof(JsonObject.Value)])
+            .Assert((_, result) => result.Should().Be(input.Value));
+
         public class JsonObject
         {
             public string? Value { get; set; }
