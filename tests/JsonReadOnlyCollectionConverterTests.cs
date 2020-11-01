@@ -10,7 +10,7 @@ namespace Extensions.System.Text.Json.Tests
     public class JsonReadOnlyCollectionConverterTests
     {
         [Theory]
-        [AutoFixtureData]
+        [A3Data]
         public void ReadOnlyCollectionPropertyIsPopulatedDuringDeserialization(JsonObject obj)
             => A3<JsonSerializerOptions>
             .Arrange(setup =>
@@ -26,7 +26,7 @@ namespace Extensions.System.Text.Json.Tests
             .Assert(result => result.Collection.Should().BeEquivalentTo(obj.Collection));
 
         [Theory]
-        [AutoFixtureData]
+        [A3Data]
         public void ReadOnlyListPropertyIsPopulatedDuringDeserialization(JsonObject obj)
             => A3<JsonSerializerOptions>
             .Arrange(setup =>
@@ -42,7 +42,7 @@ namespace Extensions.System.Text.Json.Tests
             .Assert(result => result.List.Should().BeEquivalentTo(obj.List));
 
         [Theory]
-        [AutoFixtureData]
+        [A3Data]
         public void ObjectPropertyIsPopulatedDuringDeserialization(JsonObject obj)
             => A3<JsonSerializerOptions>
             .Arrange(setup =>
